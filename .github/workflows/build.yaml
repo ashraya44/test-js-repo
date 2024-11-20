@@ -85,6 +85,9 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+      with:
+        driver-opts: |
+          network=host
       
     - name: Build Docker image
       uses: docker/build-push-action@v5
@@ -93,6 +96,7 @@ jobs:
         push: false
         load: true
         tags: myapp:test
+        network: host
         
     
     #     #- name: Use Node.js ${{ matrix.node-version }}

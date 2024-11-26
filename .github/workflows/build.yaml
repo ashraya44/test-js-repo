@@ -85,6 +85,7 @@ jobs:
 
     - name: Running inside Docker
       run: |
+            apk add curl
             curl google.com
             docker ps -a
             docker build -t helloworld .

@@ -116,7 +116,9 @@ jobs:
         docker info
     
     - name: Build Docker image
-      run: docker build -t hell .
+      run: |
+            cp /etc/ssl/certs/pse.pem ./
+            docker build -t hell .
       
     #   uses: docker/setup-buildx-action@v3
     #   with:

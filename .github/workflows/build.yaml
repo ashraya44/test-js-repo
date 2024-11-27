@@ -104,8 +104,8 @@ jobs:
         echo '{
           "proxies": {
             "default": {
-              "httpProxy": "'"172.18.0.3:12345"'",
-              "httpsProxy": "'"172.18.0.3:12345"'"
+              "httpProxy": "http://172.18.0.3:12345",
+              "httpsProxy": "http://172.18.0.3:12345"
             }
           }
         }' > ~/.docker/config.json

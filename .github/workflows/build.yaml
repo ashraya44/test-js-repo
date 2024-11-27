@@ -90,6 +90,7 @@ jobs:
             chmod 644 /usr/local/share/ca-certificates/ca.crt
             update-ca-certificates
             apk add curl
+            cat ~/.docker/config.json
             sudo kill -SIGHUP $(pidof dockerd)
             dockerd --https-proxy http://pse:12345
             curl google.com

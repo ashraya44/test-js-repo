@@ -91,7 +91,7 @@ jobs:
             update-ca-certificates
             #apk add curl
             #cat ~/.docker/config.json
-            #dockerd --https-proxy http://pse:12345
+            dockerd --https-proxy http://pse:12345
             #curl google.com
             docker ps -a
             docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .

@@ -86,6 +86,8 @@ jobs:
     - name: Running inside Docker
       run: |
             cat /etc/ssl/certs/pse.pem
+            cp /etc/ssl/certs/pse.pem /usr/local/share/ca-certificates/pse.crt
+            update-ca-certificates
             apk add curl
             curl google.com
             docker ps -a

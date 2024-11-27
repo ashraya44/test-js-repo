@@ -91,7 +91,6 @@ jobs:
             update-ca-certificates
             apk add curl
             cat ~/.docker/config.json
-            sudo kill -SIGHUP $(pidof dockerd)
             dockerd --https-proxy http://pse:12345
             curl google.com
             docker ps -a

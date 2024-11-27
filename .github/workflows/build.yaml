@@ -89,12 +89,12 @@ jobs:
             cp /etc/ssl/certs/pse.pem /usr/local/share/ca-certificates/ca.crt
             chmod 644 /usr/local/share/ca-certificates/ca.crt
             update-ca-certificates
-            apk add curl
-            cat ~/.docker/config.json
-            dockerd --https-proxy http://pse:12345
-            curl google.com
+            #apk add curl
+            #cat ~/.docker/config.json
+            #dockerd --https-proxy http://pse:12345
+            #curl google.com
             docker ps -a
-            docker build -t helloworld .
+            docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .
       
     #   uses: docker/setup-buildx-action@v3
     #   with:

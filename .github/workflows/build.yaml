@@ -100,16 +100,20 @@ jobs:
     
     - name: Create Docker config.json with proxy settings
       run: |
-        cat > ~/.docker/config.json << EOF
-        {
+        run: |
+        echo '{
           "proxies": {
             "default": {
-              "httpProxy": "http://172.18.0.3:12345",
-              "httpsProxy": http://172.18.0.3:12345"
+              "httpProxy": "'"172.18.0.3:12345"'",
+              "httpsProxy": "'"172.18.0.3:12345"'"
             }
           }
-        }
-        EOF
+        }' > ~/.docker/config.json
+
+    - name: Verify config.json
+      run: |
+        cat ~/.docker/config.json
+        docker info
     
     - name: Build Docker image
       run: docker build -t hell .

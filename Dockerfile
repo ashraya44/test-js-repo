@@ -15,7 +15,9 @@ ENV CA_FILE=/etc/ssl/certs/pse.pem
 # Manually update the CA certificates without 'update-ca-certificates'
 RUN cat /etc/ssl/certs/pse.pem >> /etc/ssl/certs/ca-certificates.crt
 RUN cat /etc/resolv.conf
-RUN apk add  curl ca-certificates
+RUN npm config delete proxy
+RUN npm config delete http-proxy
+RUN npm config delete https-proxy
 
 # Configure npm to use the custom CA and ignore strict SSL checks if needed
 RUN npm config set cafile $CA_FILE

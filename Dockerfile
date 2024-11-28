@@ -1,3 +1,4 @@
+FROM node:18-alpine
 # Copy application files
 COPY package.json .
 

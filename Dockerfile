@@ -2,6 +2,8 @@ FROM node:18-alpine
 # Copy application files
 COPY package.json .
 
+ENV HTTP_PROXY http://pse:12345
+ENV HTTPS_PROXY http://pse:12345
 # Copy your custom CA certificate
 ADD pse.pem /etc/ssl/certs/pse.pem
 

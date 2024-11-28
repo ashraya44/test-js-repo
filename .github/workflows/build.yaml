@@ -100,7 +100,6 @@ jobs:
     
     - name: Create Docker config.json with proxy settings
       run: |
-        run: |
         echo '{
           "proxies": {
             "default": {

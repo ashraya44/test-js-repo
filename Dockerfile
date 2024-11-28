@@ -15,6 +15,7 @@ RUN cat /etc/ssl/certs/pse.pem >> /etc/ssl/certs/ca-certificates.crt
 # Configure npm to use the custom CA and ignore strict SSL checks if needed
 RUN npm config set cafile $CA_FILE
 RUN npm config set strict-ssl false
-
+COPY package.json .
+RUN npm install
 # Install dependencies
 RUN npm install -v

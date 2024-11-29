@@ -80,17 +80,17 @@ jobs:
       with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           SCAN_ID: ${{ needs.create_scan_in_IR_Portal.outputs.scan_id }}
+          
     - name: Checkout the code
       uses: actions/checkout@v3
+      
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - name: NPM build
-      run: |
-            npm ci
-            ls -lah
-            npm run build --if-present
+    - run: npm install
+    - run: ls -lah
+    - run: npm run build --if-present
 
     - name: Docker buildx setup
       uses: docker/setup-buildx-action@v3

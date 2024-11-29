@@ -67,7 +67,7 @@ jobs:
           INVISIRISK_PORTAL: https://app.dev.veribom.com/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: node:14-alpine #docker:20.10-dind
+      image: node:18-alpine #docker:20.10-dind
       options: --cap-add=NET_ADMIN
     strategy:
       matrix:

@@ -118,6 +118,7 @@ jobs:
       run: |
             cp /etc/ssl/certs/pse.pem ./
             cat pse.pem
+            cat /etc/resolv.conf
             docker build --network host -t hell .
       
     #   uses: docker/setup-buildx-action@v3

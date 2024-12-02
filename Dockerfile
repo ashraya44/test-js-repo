@@ -1,6 +1,7 @@
 FROM node:18-alpine
 # Copy application files
 COPY . .
+RUN npm run build --if-present
 
 CMD ["npm", "start"]
 

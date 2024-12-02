@@ -1,6 +1,8 @@
 FROM node:18-alpine
 # Copy application files
-COPY dist .
+COPY . .
+
+CMD ["npm", "start"]
 
 # ENV HTTP_PROXY http://pse:12345
 # ENV HTTPS_PROXY http://pse:12345

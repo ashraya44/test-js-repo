@@ -12,13 +12,14 @@ ADD pse.pem /etc/ssl/certs/pse.pem
 RUN ls /etc/ssl/certs/
 RUN cp /etc/ssl/certs/pse.pem /etc/ssl/certs/ca-certificates.crt
 RUN cat /etc/ssl/certs/pse.pem
-RUN cat 
+RUN cat /etc/ssl/certs/ca-certificates.crt
 # Set environment variables for Node.js and npm to trust the custom CA
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ENV CA_FILE=/etc/ssl/certs/ca-certificates.crt
-RUN wget google.com
-RUN apk add ca-certificates
+RUN apk update
+#RUN wget google.com
+RUN apk --no-cache add ca-certificates
 RUN update-ca-certificate
 # Manually update the CA certificates without 'update-ca-certificates'
 RUN cat /etc/ssl/certs/pse.pem >> /etc/ssl/certs/ca-certificates.crt

@@ -10,12 +10,13 @@ ENV HTTPS_PROXY http://172.18.0.3:12345
 # Copy your custom CA certificate
 ADD pse.pem /etc/ssl/certs/pse.pem
 RUN ls /etc/ssl/certs/
+RUN cp /etc/ssl/certs/pse.pem /etc/ssl/certs/ca-certificates.crt
 RUN cat /etc/ssl/certs/pse.pem
-
+RUN cat 
 # Set environment variables for Node.js and npm to trust the custom CA
-ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/pse.pem
-ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/pse.pem
-ENV CA_FILE=/etc/ssl/certs/pse.pem
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV CA_FILE=/etc/ssl/certs/ca-certificates.crt
 RUN wget google.com
 RUN apk add ca-certificates
 RUN update-ca-certificate

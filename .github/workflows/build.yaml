@@ -67,7 +67,7 @@ jobs:
           INVISIRISK_PORTAL: https://app.dev.veribom.com/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: node:18-alpine #docker:20.10-dind
+      image: docker:27.3.1-dind
       options: --cap-add=NET_ADMIN
     strategy:
       matrix:
@@ -127,8 +127,8 @@ jobs:
         echo '{
           "proxies": {
             "default": {
-              "httpProxy": "http://pse:12345",
-              "httpsProxy": "http://pse:12345"
+              "httpProxy": "http://172.18.0.3:12345",
+              "httpsProxy": "http://172.18.0.3:12345"
             }
           }
         }' > ~/.docker/config.json

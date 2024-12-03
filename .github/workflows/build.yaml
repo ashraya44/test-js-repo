@@ -128,7 +128,8 @@ jobs:
           "proxies": {
             "default": {
               "httpProxy": "http://172.18.0.3:12345",
-              "httpsProxy": "http://172.18.0.3:12345"
+              "httpsProxy": "http://172.18.0.3:12345",
+              "noProxy": "localhost,127.0.0.1"
             }
           }
         }' > ~/.docker/config.json

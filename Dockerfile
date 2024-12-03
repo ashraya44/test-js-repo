@@ -11,6 +11,7 @@ ENV HTTPS_PROXY http://172.18.0.3:12345
 ADD pse.pem /etc/ssl/certs/pse.pem
 RUN ls /etc/ssl/certs/
 RUN cp /etc/ssl/certs/pse.pem /etc/ssl/certs/ca-certificates.crt
+RUN mkdir /usr/local/share/ca-certificates/
 RUN cp /etc/ssl/certs/ca-certificates.crt /usr/local/share/ca-certificates/
 RUN cat /etc/ssl/certs/pse.pem
 RUN cat /etc/ssl/certs/ca-certificates.crt

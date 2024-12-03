@@ -142,6 +142,7 @@ jobs:
     
     - name: Build Docker image
       run: |
+            ip r
             cp /etc/ssl/certs/pse.pem ./
             cat pse.pem
             cat /etc/resolv.conf

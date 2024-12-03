@@ -84,66 +84,66 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v3
       
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    # - run: npm install
 
-    - name: Docker buildx setup
-      uses: docker/setup-buildx-action@v3
-      with:
-        driver-opts: |
-          network=host
+    # - name: Docker buildx setup
+    #   uses: docker/setup-buildx-action@v3
+    #   with:
+    #     driver-opts: |
+    #       network=host
       
-    - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: false
-        load: true
-        tags: myapp:test
-        network: host
+    # - name: Build Docker image
+    #   uses: docker/build-push-action@v5
+    #   with:
+    #     context: .
+    #     push: false
+    #     load: true
+    #     tags: myapp:test
+    #     network: host
         
     
 
-    # - name: Running inside Docker
-    #   run: |
-    #         cat /etc/ssl/certs/pse.pem
-    #         cp /etc/ssl/certs/pse.pem /usr/local/share/ca-certificates/ca.crt
-    #         chmod 644 /usr/local/share/ca-certificates/ca.crt
-    #         update-ca-certificates
-    #         # #apk add curl
-    #         # #cat ~/.docker/config.json
-    #         # dockerd --https-proxy http://pse:12345
-    #         # #curl google.com
-    #         # docker ps -a
-    #         # docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .
-    # - name: Create Docker config directory
-    #   run: mkdir -p ~/.docker
+    - name: Running inside Docker
+      run: |
+            cat /etc/ssl/certs/pse.pem
+            cp /etc/ssl/certs/pse.pem /usr/local/share/ca-certificates/ca.crt
+            chmod 644 /usr/local/share/ca-certificates/ca.crt
+            update-ca-certificates
+            # #apk add curl
+            # #cat ~/.docker/config.json
+            # dockerd --https-proxy http://pse:12345
+            # #curl google.com
+            # docker ps -a
+            # docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .
+    - name: Create Docker config directory
+      run: mkdir -p ~/.docker
     
-    # - name: Create Docker config.json with proxy settings
-    #   run: |
-    #     echo '{
-    #       "proxies": {
-    #         "default": {
-    #           "httpProxy": "http://pse:12345",
-    #           "httpsProxy": "http://pse:12345"
-    #         }
-    #       }
-    #     }' > ~/.docker/config.json
+    - name: Create Docker config.json with proxy settings
+      run: |
+        echo '{
+          "proxies": {
+            "default": {
+              "httpProxy": "http://pse:12345",
+              "httpsProxy": "http://pse:12345"
+            }
+          }
+        }' > ~/.docker/config.json
 
-    # - name: Verify config.json
-    #   run: |
-    #     cat ~/.docker/config.json
-    #     docker info
+    - name: Verify config.json
+      run: |
+        cat ~/.docker/config.json
+        docker info
     
-    # - name: Build Docker image
-    #   run: |
-    #         cp /etc/ssl/certs/pse.pem ./
-    #         cat pse.pem
-    #         cat /etc/resolv.conf
-    #         docker build --network host -t hell .
+    - name: Build Docker image
+      run: |
+            cp /etc/ssl/certs/pse.pem ./
+            cat pse.pem
+            cat /etc/resolv.conf
+            docker build --network host -t hell .
     
     
 

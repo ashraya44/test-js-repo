@@ -20,7 +20,7 @@ ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ENV CA_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN wget google.com
+#RUN wget google.com
 
 RUN apk update
 

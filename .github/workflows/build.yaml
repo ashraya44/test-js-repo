@@ -55,11 +55,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: [create_scan_in_IR_Portal, ecr_details]
     services:
+      # Create a network before defining services
+      network:
+        image: alpine
+        options: >-
+          --network-alias custom-network
       pse:
         image: 282904853176.dkr.ecr.us-west-2.amazonaws.com/invisirisk/pse-proxy:latest
         credentials:
           username: ${{needs.ecr_details.outputs.ecr_username}}
           password: ${{needs.ecr_details.outputs.ecr_token}}
+        options: >-
+          --network custom-network
         env:
           PSE_DEBUG_FLAG: --alsologtostderr
           POLICY_LOG: t
@@ -67,8 +74,11 @@ jobs:
           INVISIRISK_PORTAL: https://app.dev.veribom.com/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: docker:27.3.1-dind
-      options: --cap-add=NET_ADMIN
+      image: docker:20.10-dind
+      options: >-
+        --cap-add=NET_ADMIN
+        --network custom-network
+      #options: --cap-add=NET_ADMIN
     strategy:
       matrix:
         node-version: [18.x]
@@ -83,6 +93,45 @@ jobs:
           
     - name: Checkout the code
       uses: actions/checkout@v3
+
+    # - name: Running inside Docker
+    #   run: |
+    #         #cat /etc/ssl/certs/pse.pem
+    #         cp /etc/ssl/certs/pse.pem .
+    #         #chmod 644 /usr/local/share/ca-certificates/ca.crt
+    #         #update-ca-certificates
+    #         # #apk add curl
+    #         # #cat ~/.docker/config.json
+    #         # dockerd --https-proxy http://pse:12345
+    #         # #curl google.com
+    #         # docker ps -a
+    #         # docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .
+    # - name: Create Docker config directory
+    #   run: mkdir -p ~/.docker
+    
+    # - name: Create Docker config.json with proxy settings
+    #   run: |
+    #     echo '{
+    #       "proxies": {
+    #         "default": {
+    #           "httpProxy": "http://172.18.0.3:12345",
+    #           "httpsProxy": "http://172.18.0.3:12345",
+    #           "noProxy": "localhost,127.0.0.1",
+    #           "caFile": "/usr/local/share/ca-certificates/ca.crt"
+    #         }
+    #       }
+    #     }' > ~/.docker/config.json
+
+    # - name: Verify config.json
+    #   run: |
+    #     cat ~/.docker/config.json
+    #     docker info
+    
+    - name: Build Docker image
+      run: |
+            ip r
+            cp /etc/ssl/certs/pse.pem .
+            docker build --network host -t hello .
       
     # - name: Use Node.js ${{ matrix.node-version }}
     #   uses: actions/setup-node@v3
@@ -105,48 +154,8 @@ jobs:
     #     tags: myapp:test
     #     network: host
         
-    
 
-    - name: Running inside Docker
-      run: |
-            cat /etc/ssl/certs/pse.pem
-            cp /etc/ssl/certs/pse.pem /usr/local/share/ca-certificates/ca.crt
-            chmod 644 /usr/local/share/ca-certificates/ca.crt
-            update-ca-certificates
-            # #apk add curl
-            # #cat ~/.docker/config.json
-            # dockerd --https-proxy http://pse:12345
-            # #curl google.com
-            # docker ps -a
-            # docker build --build-arg HTTP_PROXY="http://172.18.0.3:12345" -t helloworld .
-    - name: Create Docker config directory
-      run: mkdir -p ~/.docker
-    
-    - name: Create Docker config.json with proxy settings
-      run: |
-        echo '{
-          "proxies": {
-            "default": {
-              "httpProxy": "http://172.18.0.3:12345",
-              "httpsProxy": "http://172.18.0.3:12345",
-              "noProxy": "localhost,127.0.0.1",
-              "caFile": "/usr/local/share/ca-certificates/ca.crt"
-            }
-          }
-        }' > ~/.docker/config.json
 
-    - name: Verify config.json
-      run: |
-        cat ~/.docker/config.json
-        docker info
-    
-    - name: Build Docker image
-      run: |
-            ip r
-            cp /etc/ssl/certs/pse.pem ./
-            cat pse.pem
-            cat /etc/resolv.conf
-            docker build --network host -t hell .
     
     
 
